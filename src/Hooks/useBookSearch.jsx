@@ -17,7 +17,7 @@ export default function useBookSearch(query, pageNumber) {
 		const fetchData = async () => {
 			try {
 				const respond = await fetch(
-					"http://openlibrary.org/search.json?" +
+					"https://openlibrary.org/search.json?" +
 						new URLSearchParams({ q: query, page: pageNumber }),
 					{
 						method: "GET",
