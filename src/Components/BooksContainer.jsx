@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import BookContext from "../context-data";
 import BookItems from "./BookItems";
 import Message from "./Message";
-
 const BooksContainer = () => {
 	const Context = useContext(BookContext);
 	return (

@@ -5,7 +5,7 @@ import useBookSearch from "../Hooks/useBookSearch";
 const SearchBar = () => {
 	const [query, setQuery] = useState("");
 	const Context = useContext(BookContext);
-	const { books, loading, error, hasMore } = useBookSearch(
+	const { books, hasMore, loading, error } = useBookSearch(
 		query,
 		Context.pageNumber
 	);

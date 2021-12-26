@@ -7,6 +7,7 @@ const BookContext = React.createContext({
 	error: false,
 	hasMore: false,
 	searchResult: () => {},
+	setPage: () => {},
 	nextPage: () => {},
 	isLoading: () => {},
 	hasMoreBooks: () => {},
@@ -24,8 +25,12 @@ export const BookProvider = ({ children }) => {
 		setBooks(books);
 	};
 
+	const setPage = (pageNumber) => {
+		setPageNumber(pageNumber);
+	};
+
 	const nextPage = () => {
-		setPageNumber(pageNumber + 1);
+		setPageNumber((prevPageNumber) => prevPageNumber + 1);
 	};
 
 	const isLoading = (loading) => {
@@ -49,6 +54,7 @@ export const BookProvider = ({ children }) => {
 				error,
 				hasMore,
 				searchResult,
+				setPage,
 				nextPage,
 				isLoading,
 				hasMoreBooks,

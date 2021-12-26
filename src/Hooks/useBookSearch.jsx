@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import BookContext from "../context-data";
 
-export default function useBookSearch(query, pageNumber) {
+export default function useBookSearch(query) {
+	const Context = useContext(BookContext);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [books, setBooks] = useState([]);
@@ -8,6 +10,7 @@ export default function useBookSearch(query, pageNumber) {
 
 	useEffect(() => {
 		setBooks([]);
+		Context.setPage(1);
 	}, [query]);
 
 	useEffect(() => {
@@ -18,7 +21,7 @@ export default function useBookSearch(query, pageNumber) {
 			try {
 				const respond = await fetch(
 					"https://openlibrary.org/search.json?" +
-						new URLSearchParams({ q: query, page: pageNumber }),
+						new URLSearchParams({ q: query, page: Context.pageNumber }),
 					{
 						method: "GET",
 						signal: controller.signal,
@@ -44,7 +47,6 @@ export default function useBookSearch(query, pageNumber) {
 				setLoading(false);
 			} catch (error) {
 				if (error.name === "AbortError") {
-					console.error("fetching aborted");
 					return;
 				}
 				setError(true);
@@ -56,12 +58,12 @@ export default function useBookSearch(query, pageNumber) {
 		return () => {
 			controller.abort();
 		};
-	}, [query, pageNumber]);
+	}, [query, Context.pageNumber]);
 
 	return {
-		loading: loading,
-		error: error,
 		books: books,
 		hasMore: hasMore,
+		loading: loading,
+		error: error,
 	};
 }
