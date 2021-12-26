@@ -15,13 +15,17 @@ export default function useBookSearch(query) {
 
 	useEffect(() => {
 		let controller = new AbortController();
+
 		setLoading(true);
 		setError(false);
 		const fetchData = async () => {
 			try {
 				const respond = await fetch(
 					"https://openlibrary.org/search.json?" +
-						new URLSearchParams({ q: query, page: Context.pageNumber }),
+						new URLSearchParams({
+							q: query.length !== 0 ? query : "random",
+							page: Context.pageNumber,
+						}),
 					{
 						method: "GET",
 						signal: controller.signal,
