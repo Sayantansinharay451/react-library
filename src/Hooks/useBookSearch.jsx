@@ -23,7 +23,10 @@ export default function useBookSearch(query) {
 				const respond = await fetch(
 					"https://openlibrary.org/search.json?" +
 						new URLSearchParams({
-							q: query.length !== 0 ? query : "random",
+							q:
+								query.length !== 0
+									? query
+									: String.fromCharCode(Math.floor(Math.random() * 26) + 65),
 							page: Context.pageNumber,
 						}),
 					{
