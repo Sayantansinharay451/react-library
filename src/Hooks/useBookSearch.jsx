@@ -8,6 +8,14 @@ export default function useBookSearch(query) {
 	const [books, setBooks] = useState([]);
 	const [hasMore, setHasMore] = useState(false);
 
+	const generateString = (length) => {
+		let str = "";
+		for (let i = 0; i < length; i++) {
+			str += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+		}
+		return str;
+	};
+
 	useEffect(() => {
 		setBooks([]);
 		Context.setPage(1);
@@ -23,10 +31,7 @@ export default function useBookSearch(query) {
 				const respond = await fetch(
 					"https://openlibrary.org/search.json?" +
 						new URLSearchParams({
-							q:
-								query.length !== 0
-									? query
-									: String.fromCharCode(Math.floor(Math.random() * 26) + 65),
+							q: query.length !== 0 ? query : generateString(3),
 							page: Context.pageNumber,
 						}),
 					{
